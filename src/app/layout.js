@@ -1,5 +1,15 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  Container,
+  IconButton,
+} from "@mui/material";
+import Link from "next/link";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,7 +33,85 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* AppBar for the navigation */}
+        <AppBar position="static" sx={{ backgroundColor: "#90caf9" }}>
+          {" "}
+          {/* Lighter blue color */}
+          <Toolbar>
+            {/* Icon to the left */}
+            <IconButton edge="start" color="inherit" sx={{ marginRight: 2 }}>
+              <img src="/1.png" alt="App Icon" width={30} height={30} />{" "}
+              {/* Absolute path for the image */} 
+            </IconButton>
+
+            {/* Title with custom font and styling */}
+            <Typography
+              variant="h6"
+              sx={{
+                flexGrow: 1,
+                fontFamily: '"Roboto", sans-serif', // Font change
+                fontWeight: 700, // Bold font weight
+                color: "#ffffff", // White text color to contrast with blue
+                letterSpacing: "0.05em", // Slight letter spacing for readability
+                textTransform: "uppercase", // Uppercase text
+              }}
+            >
+              {"Mo'men Nassar"}
+            </Typography>
+
+            {/* Navigation links */}
+            <Box sx={{ display: "flex", gap: 2 }}>
+              <Link href="/sessions" passHref>
+                <Button
+                  sx={{
+                    color: "#ffffff", // White color to contrast the blue background
+                    fontFamily: '"Roboto", sans-serif', // Font change
+                    fontWeight: 500, // Medium font weight
+                    textTransform: "uppercase", // Uppercase text
+                    "&:hover": {
+                      backgroundColor: "#64b5f6", // Slightly darker blue on hover
+                    },
+                  }}
+                >
+                  Sessions
+                </Button>
+              </Link>
+              <Link href="/homework" passHref>
+                <Button
+                  sx={{
+                    color: "#ffffff", // White color to contrast the blue background
+                    fontFamily: '"Roboto", sans-serif', // Font change
+                    fontWeight: 500, // Medium font weight
+                    textTransform: "uppercase", // Uppercase text
+                    "&:hover": {
+                      backgroundColor: "#64b5f6", // Slightly darker blue on hover
+                    },
+                  }}
+                >
+                  Homework
+                </Button>
+              </Link>
+              <Link href="/tests" passHref>
+                <Button
+                  sx={{
+                    color: "#ffffff", // White color to contrast the blue background
+                    fontFamily: '"Roboto", sans-serif', // Font change
+                    fontWeight: 500, // Medium font weight
+                    textTransform: "uppercase", // Uppercase text
+                    "&:hover": {
+                      backgroundColor: "#64b5f6", // Slightly darker blue on hover
+                    },
+                  }}
+                >
+                  Tests
+                </Button>
+              </Link>
+            </Box>
+          </Toolbar>
+        </AppBar>
+
+        {/* Main content area */}
+        <Container sx={{ marginTop: 4 }}>{children}</Container>
       </body>
     </html>
   );
