@@ -18,7 +18,8 @@ const createTables = () => {
       name TEXT NOT NULL,
       phoneNum TEXT NOT NULL,
       parentNum TEXT,
-      studyYear INTEGER NOT NULL, -- Add studyYear to Student table
+      studyYear INTEGER NOT NULL,
+      gender TEXT CHECK( gender IN ('Male', 'Female', 'Other') ) NOT NULL,  -- Gender column added
       centerId INTEGER,
       FOREIGN KEY (centerId) REFERENCES Center(id)
     )
@@ -28,7 +29,11 @@ const createTables = () => {
   db.run(`
     CREATE TABLE IF NOT EXISTS GeneralSession (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL
+      name TEXT NOT NULL,
+      hasHomework BOOLEAN NOT NULL DEFAULT 0,  -- Indicates if homework is required
+      fullMarkHomework REAL,                   -- Full mark for homework
+      hasTest BOOLEAN NOT NULL DEFAULT 0,      -- Indicates if a test is required
+      fullMarkTest REAL                        -- Full mark for test
     )
   `);
 
@@ -41,7 +46,7 @@ const createTables = () => {
       date TEXT NOT NULL,
       time TEXT NOT NULL,
       price REAL NOT NULL,
-      studyYear INTEGER NOT NULL, -- Add studyYear to CenterSession table
+      studyYear INTEGER NOT NULL,
       FOREIGN KEY (centerId) REFERENCES Center(id),
       FOREIGN KEY (generalSessionId) REFERENCES GeneralSession(id)
     )
@@ -70,28 +75,28 @@ const createTables = () => {
     )
   `);
 
-  // Create Homework table
+  // Create Homework table linked to GeneralSession
   db.run(`
     CREATE TABLE IF NOT EXISTS Homework (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       grade REAL,
       studentId INTEGER,
-      centerSessionId INTEGER,
+      generalSessionId INTEGER,  -- Link to GeneralSession
       FOREIGN KEY (studentId) REFERENCES Student(id),
-      FOREIGN KEY (centerSessionId) REFERENCES CenterSession(id)
+      FOREIGN KEY (generalSessionId) REFERENCES GeneralSession(id)
     )
   `);
 
-  // Create Test table
+  // Create Test table linked to GeneralSession
   db.run(`
     CREATE TABLE IF NOT EXISTS Test (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       fullMark REAL NOT NULL,
       grade REAL NOT NULL,
       studentId INTEGER,
-      centerSessionId INTEGER,
+      generalSessionId INTEGER,  -- Link to GeneralSession
       FOREIGN KEY (studentId) REFERENCES Student(id),
-      FOREIGN KEY (centerSessionId) REFERENCES CenterSession(id)
+      FOREIGN KEY (generalSessionId) REFERENCES GeneralSession(id)
     )
   `);
 };

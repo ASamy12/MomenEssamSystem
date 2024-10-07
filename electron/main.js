@@ -14,7 +14,7 @@ async function createWindow() {
 
   win.loadURL(
     isDev.default
-      ? "http://localhost:3000" // Use the default export from the ES module
+      ? "http://localhost:3010" // Use the default export from the ES module
       : `file://${path.join(__dirname, "../out/index.html")}`
   );
 }
