@@ -7,7 +7,7 @@
     "dev": "next dev -p 3010",
     "build": "next build",
     "start": "electron .",
-    "electron": "concurrently \"npm run dev -p 3010\" \"wait-on http://localhost:3010 && electron electron/main.js\"",
+    "electron": "concurrently \"npm run dev \" \"wait-on http://localhost:3010 && electron electron/main.js\"",
     "dist": "npm run build && electron-builder"
   },
   "dependencies": {
@@ -15,10 +15,14 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.1",
     "@mui/material": "^6.1.2",
+    "axios": "^1.7.7",
+    "better-sqlite3": "^11.5.0",
     "material-react-table": "^3.0.1",
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
+    "react-qrcode-logo": "^3.0.0",
+    "react-to-print": "^3.0.1",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {

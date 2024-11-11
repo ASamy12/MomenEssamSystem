@@ -1,7 +1,7 @@
-// "use client";
-// components/AddEditCenterModal.js
+"use client";
 import React, { useState, useEffect } from "react";
 import { Box, Modal, TextField, Button } from "@mui/material";
+import axios from "axios";
 
 export default function AddEditCenterModal({
   open,
@@ -20,23 +20,20 @@ export default function AddEditCenterModal({
   }, [center]);
 
   const handleSubmit = async () => {
-    if (center) {
-      // Edit mode
-      await fetch(`/api/center/${center.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name }),
-      });
-    } else {
-      // Add mode
-      await fetch("/api/center", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name }),
-      });
+    try {
+      if (center) {
+        // Edit mode
+        await axios.put(`/api/center`, { id: center.id, name });
+      } else {
+        // Add mode
+        console.log("adding center", name);
+        await axios.post("/api/center", { name });
+      }
+      onSuccess(); // Refresh center list
+      onClose(); // Close modal
+    } catch (error) {
+      console.error("Error updating center:", error);
     }
-    onSuccess(); // Refresh center list
-    onClose(); // Close modal
   };
 
   return (
